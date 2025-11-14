@@ -52,6 +52,7 @@ dependencies {
 
     implementation("androidx.room:room-runtime:$rootProject.ext.roomVersion")
     implementation("androidx.room:room-ktx:$rootProject.ext.roomVersion")
+    implementation libs.navigation.compose
     ksp("androidx.room:room-compiler:$rootProject.ext.roomVersion")
 
     implementation platform(rootProject.ext.firebaseBom)

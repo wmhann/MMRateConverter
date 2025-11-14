@@ -11,6 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.mmrateconverter.presentation.ui.theme.MMRateConverterTheme
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.mmrateconverter.presentation.ui.rates.RatesScreen // Rates Screen ကို Import လုပ်ပါ
+import com.example.mmrateconverter.presentation.ui.calculator.CalculatorScreen // Calculator Screen ကို Import လုပ်ပါ
+import com.example.mmrateconverter.presentation.ui.theme.MMRateConverterTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +28,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    AppNavigation() // App ရဲ့ Navigation ကို စတင်ခြင်း
                 }
             }
         }
@@ -30,17 +36,22 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun AppNavigation() {
+    val navController = rememberNavController()
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MMRateConverterTheme {
-        Greeting("Android")
+    NavHost(navController = navController, startDestination = "rates_list") {
+
+        // 1. Rates List Screen (Home)
+        composable("rates_list") {
+            // လောလောဆယ် ViewModel တွေကို ကိုယ်တိုင် ဖန်တီးပြီး ပေးပို့ပါမည် (DI မပါသေးသဖြင့်)
+            // (RatesViewModel ကို Create လုပ်ပြီး ပေးပို့ရန် လိုအပ်ပါသည်။
+            // အဆင့် ၉ မှာ Dependency Injection ကို စတင်ပါမည်။)
+            RatesScreen() // <--- ဒီနေရာမှာ Rates Screen ကို ပြသပါမည်။
+        }
+
+        // 2. Calculator Screen
+        composable("calculator") {
+            // CalculatorScreen() // <--- Calculator Screen ကို ပြသပါမည်။
+        }
     }
 }

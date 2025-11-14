@@ -1,3 +1,5 @@
+package com.example.mmrateconverter.data.remote
+
 import com.example.mmrateconverter.data.local.entity.ExchangeRateRoomEntity
 import com.example.mmrateconverter.data.remote.RemoteDataSource
 import com.google.firebase.firestore.FirebaseFirestore
@@ -6,10 +8,7 @@ import com.example.mmrateconverter.data.remote.model.ExchangeRateRemoteModel
 import com.example.mmrateconverter.data.remote.model.GoldPriceRemoteModel
 import kotlinx.coroutines.flow.Flow
 
-interface RemoteDataSource {
-    fun getExchangeRates(): Flow<List<ExchangeRateRoomEntity>>
-    suspend fun updateFavorite(rateId: String, isFavorite: Boolean)
-}
+
 class FirebaseFirestoreDataSource(
     private val firestore: FirebaseFirestore // FirebaseFirestore Instance
 ) : RemoteDataSource {
@@ -67,3 +66,5 @@ class FirebaseFirestoreDataSource(
         return goldModels
     }
 }
+
+
