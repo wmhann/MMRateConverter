@@ -1,0 +1,20 @@
+plugins {
+    id("com.android.application") version '8.13.1' apply false
+    id("org.jetbrains.kotlin.android") version "2.2.21" apply false
+    id("com.google.gms.google-services") version "4.4.4" apply false
+    id("org.jetbrains.kotlin.kapt") version "2.2.21" apply false
+    id("org.jetbrains.kotlin.plugin.compose") version "2.2.21" apply false
+    id("com.google.devtools.ksp") version "2.2.21-RC-2.0.4" apply false
+}
+
+ext {
+    kotlinVersion = "2.2.21"
+    compose_compiler_version = '1.5.15'
+    roomVersion = '2.8.3'
+    ktorVersion = '3.3.2'
+    coroutinesVersion = '1.10.2'
+    lifecycleVersion = '2.9.4'
+    coreKtx = '1.12.0'
+    composeBom = 'androidx.compose:compose-bom:2025.11.00'
+    firebaseBom = 'com.google.firebase:firebase-bom:34.5.0'
+}
