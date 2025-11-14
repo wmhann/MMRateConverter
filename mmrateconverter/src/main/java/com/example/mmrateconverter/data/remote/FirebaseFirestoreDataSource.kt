@@ -40,7 +40,7 @@ class FirebaseFirestoreDataSource(
     }
 
     // fetchGoldPrices() ကိုလည်း အလားတူ ရေးသားရပါမည်။
-    override suspend fun fetchGoldPrice(): List<GoldPriceRemoteModel> {
+    override suspend fun fetchGoldPrices(): List<GoldPriceRemoteModel> {
         val snapshot = firestore.collection(GOLD_COLLECTION)
             .get()
             .await()
@@ -60,5 +60,3 @@ class FirebaseFirestoreDataSource(
         return goldModels
     }
 }
-
-

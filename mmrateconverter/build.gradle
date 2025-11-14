@@ -1,0 +1,63 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id("com.google.devtools.ksp")
+}
+
+android {
+    namespace 'com.example.mmrateconverter'
+    compileSdk 36
+
+    defaultConfig {
+        minSdk 24
+        targetSdk 36
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+dependencies {
+    // Room (Local Database)
+    implementation("androidx.room:room-runtime:${rootProject.ext.roomVersion}")
+    implementation("androidx.room:room-ktx:${rootProject.ext.roomVersion}")
+    ksp("androidx.room:room-compiler:${rootProject.ext.roomVersion}")
+
+    // Ktor Client (Networking)
+    implementation("io.ktor:ktor-client-core:${rootProject.ext.ktorVersion}")
+    implementation("io.ktor:ktor-client-cio:${rootProject.ext.ktorVersion}")
+    implementation("io.ktor:ktor-client-content-negotiation:${rootProject.ext.ktorVersion}")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:${rootProject.ext.ktorVersion}")
+
+    // Firebase (Remote Data Source)
+    implementation(platform(rootProject.ext.firebaseBom))
+    implementation('com.google.firebase:firebase-firestore')
+
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.ext.coroutinesVersion}")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${rootProject.ext.coroutinesVersion}")
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.1' // For await()
+
+    // Lifecycle (optional for DataSource/ViewModel scope)
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${rootProject.ext.lifecycleVersion}")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${rootProject.ext.lifecycleVersion}")
+
+    testImplementation("junit:junit:4.13.2")
+}
