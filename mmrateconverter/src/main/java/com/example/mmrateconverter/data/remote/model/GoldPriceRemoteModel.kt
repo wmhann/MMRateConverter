@@ -7,5 +7,6 @@ data class GoldPriceRemoteModel(
     val id: String,
     val name: String,
     val price: Double,
-    val lastUpdated: Long
+    val lastUpdated: Long,
+    val unit: String
 )

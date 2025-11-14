@@ -2,7 +2,24 @@ package com.example.mmrateconverter.presentation.ui.rates
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-// ... (Compose imports)
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.StarBorder
+import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.mmrateconverter.data.local.entity.ExchangeRateRoomEntity
+import com.example.mmrateconverter.domain.entities.ExchangeRateEntity
+
+
 
 @Composable
 fun RatesScreen(viewModel: RatesViewModel = viewModel()) {
@@ -30,6 +47,11 @@ fun RatesScreen(viewModel: RatesViewModel = viewModel()) {
     }
 }
 
+fun viewModel(): RatesViewModel {
+    TODO("Not yet implemented")
+}
+
+
 // Rate Item တစ်ခုချင်းစီအတွက် Composable
 @Composable
 fun RateItem(rate: ExchangeRateEntity, onFavoriteClick: () -> Unit) {
@@ -40,7 +62,7 @@ fun RateItem(rate: ExchangeRateEntity, onFavoriteClick: () -> Unit) {
         // Favorite Button
         IconButton(onClick = onFavoriteClick) {
             Icon(
-                imageVector = if (rate.isFavorite) Icons.Filled.Star else Icons.Outlined.Star,
+                imageVector = if (rate.isFavorite) Icons.Filled.Star else Icons.Default.StarBorder,
                 contentDescription = "Favorite"
             )
         }
