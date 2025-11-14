@@ -4,7 +4,6 @@ import com.example.mmrateconverter.data.remote.FirebaseFirestoreDataSource
 import com.example.mmrateconverter.data.remote.RemoteDataSource
 import com.google.firebase.firestore.FirebaseFirestore // Firebase ကို စတင်အသုံးပြုရန်
 import com.google.firebase.Firebase
-import com.google.firebase.firestore
 
 /**
  * Dependency Injection အတွက် Manually ဖန်တီးထားသော Container
