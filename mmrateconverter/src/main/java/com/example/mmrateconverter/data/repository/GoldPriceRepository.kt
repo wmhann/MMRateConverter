@@ -5,6 +5,6 @@ import com.example.mmrateconverter.domain.entities.GoldPriceEntity
 
 interface GoldPriceRepository {
     fun getGoldPrices(): Flow<List<GoldPriceEntity>>
-    suspend fun toggleFavorite(rateId: String, isFavorite: Boolean)
-    fun toggleGoldFavorite(goldId: Any, favorite: Boolean)
+    suspend fun toggleFavorite(priceId: String, isFavorite: Boolean)
+
 }

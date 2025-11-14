@@ -1,4 +1,4 @@
-package com.example.mmrateconverter.ui.theme
+package com.example.mmrateconverter.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
