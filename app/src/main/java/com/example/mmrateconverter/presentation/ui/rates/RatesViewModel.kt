@@ -1,5 +1,5 @@
 package com.example.mmrateconverter.presentation.ui.rates
-
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,6 +34,7 @@ class RatesViewModel @Inject constructor(
             .onStart {
                 // Repository က စတင် အလုပ်လုပ်ရင် Loading State ကို ပြောင်း
                 _state.value = _state.value.copy(isLoading = true, error = null)
+                Log.d("VIEWMODEL_INIT", "Fetching started")
             }
             .onEach { rates ->
                 // Data အသစ်ရောက်လာတိုင်း UI State ကို Update လုပ်
