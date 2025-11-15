@@ -2,17 +2,18 @@ package com.example.mmrateconverter.presentation.ui.calculator
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mmrateconverter.domain.usecase.CalculateExchangeAmountUseCase
+import com.example.mmrateconverter.domain.usecase.GetLatestRatesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import com.example.mmrateconverter.domain.usecase.CalculateExchangeAmountUseCase
-import com.example.mmrateconverter.domain.usecase.GetLatestRatesUseCase // Currency စာရင်းရဖို့
+import javax.inject.Inject
 
-class CalculatorViewModel(
+@HiltViewModel
+class CalculatorViewModel @Inject constructor(
     private val getLatestRatesUseCase: GetLatestRatesUseCase,
     private val calculateExchangeAmountUseCase: CalculateExchangeAmountUseCase
 ) : ViewModel() {

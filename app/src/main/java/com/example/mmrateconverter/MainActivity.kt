@@ -16,6 +16,7 @@ import com.example.mmrateconverter.presentation.ui.rates.RatesScreen
 import com.example.mmrateconverter.presentation.ui.theme.MMRateConverterTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+
 // Hilt ကို အသုံးပြုမယ့် Activity ဖြစ်ကြောင်း ကြေညာခြင်း
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

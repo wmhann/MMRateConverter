@@ -1,13 +1,12 @@
 package com.example.mmrateconverter.di
 
+import com.example.mmrateconverter.data.repository.ExchangeRateRepository
+import com.example.mmrateconverter.domain.usecase.GetLatestRatesUseCase
+import com.example.mmrateconverter.domain.usecase.ToggleFavoriteUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import com.example.mmrateconverter.data.repository.ExchangeRateRepository
-import com.example.mmrateconverter.domain.usecase.CalculateExchangeAmountUseCase
-import com.example.mmrateconverter.domain.usecase.GetLatestRatesUseCase
-import com.example.mmrateconverter.domain.usecase.ToggleFavoriteUseCase
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -23,8 +22,5 @@ object UseCaseModule {
         return ToggleFavoriteUseCase(repository)
     }
 
-    @Provides
-    fun provideCalculateExchangeAmountUseCase(): CalculateExchangeAmountUseCase {
-        return CalculateExchangeAmountUseCase()
-    }
+
 }
