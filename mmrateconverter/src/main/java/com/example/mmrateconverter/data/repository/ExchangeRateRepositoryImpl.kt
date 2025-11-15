@@ -9,7 +9,7 @@ import com.example.mmrateconverter.data.remote.RemoteDataSource
 import com.example.mmrateconverter.domain.entities.ExchangeRateEntity
 import java.io.IOException // To Handle Network error
 
-class ExchangeRateRepositoryImpl(
+class ExchangeRateRepositoryImpl (
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource
 ) : ExchangeRateRepository {

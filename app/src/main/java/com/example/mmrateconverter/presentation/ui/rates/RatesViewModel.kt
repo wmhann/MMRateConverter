@@ -13,8 +13,10 @@ import kotlinx.coroutines.launch
 import com.example.mmrateconverter.domain.entities.ExchangeRateEntity
 import com.example.mmrateconverter.domain.usecase.GetLatestRatesUseCase
 import com.example.mmrateconverter.domain.usecase.ToggleFavoriteUseCase
-
-class RatesViewModel(
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+@HiltViewModel
+class RatesViewModel @Inject constructor(
     private val getLatestRatesUseCase: GetLatestRatesUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase
 ) : ViewModel() {

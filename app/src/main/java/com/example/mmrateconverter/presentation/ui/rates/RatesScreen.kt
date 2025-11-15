@@ -1,28 +1,26 @@
 package com.example.mmrateconverter.presentation.ui.rates
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
-import androidx.compose.material.icons.outlined.Star
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.mmrateconverter.data.local.entity.ExchangeRateRoomEntity
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mmrateconverter.domain.entities.ExchangeRateEntity
 
 
-
 @Composable
-fun RatesScreen(viewModel: RatesViewModel = viewModel()) {
+fun RatesScreen(viewModel: RatesViewModel = hiltViewModel()) {
     // ViewModel ရဲ့ StateFlow ကို စောင့်ကြည့်ခြင်း
     val state by viewModel.state.collectAsState()
 
@@ -45,10 +43,6 @@ fun RatesScreen(viewModel: RatesViewModel = viewModel()) {
             }
         }
     }
-}
-
-fun viewModel(): RatesViewModel {
-    TODO("Not yet implemented")
 }
 
 

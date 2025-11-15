@@ -17,7 +17,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.mmrateconverter.presentation.ui.rates.RatesScreen // Rates Screen ကို Import လုပ်ပါ
 import com.example.mmrateconverter.presentation.ui.calculator.CalculatorScreen // Calculator Screen ကို Import လုပ်ပါ
 import com.example.mmrateconverter.presentation.ui.theme.MMRateConverterTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+// Hilt ကို အသုံးပြုမယ့် Activity ဖြစ်ကြောင်း ကြေညာခြင်း
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,3 +58,5 @@ fun AppNavigation() {
         }
     }
 }
+
+
