@@ -54,7 +54,7 @@ fun AppNavigation() {
 
         // 2. Calculator Screen
         composable("calculator") {
-            CalculatorScreen() // <--- Calculator Screen ကို ပြသပါမည်။
+            CalculatorScreen(navController = navController) // <--- Calculator Screen ကို ပြသပါမည်။
         }
     }
 }

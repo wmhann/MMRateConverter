@@ -30,51 +30,77 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.material.icons.filled.ArrowBack // Import
+import androidx.compose.material3.TopAppBar
+import androidx.navigation.NavController
+import androidx.compose.material3.Scaffold
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CalculatorScreen(viewModel: CalculatorViewModel = hiltViewModel()) {
+fun CalculatorScreen(
+    viewModel: CalculatorViewModel = hiltViewModel(),
+    navController: NavController
+) {
     val state by viewModel.state.collectAsState()
-
-    Column(modifier = Modifier.padding(16.dp)) {
-
-        // 1. Source Currency Input
-        CurrencyInputRow(
-            currencyId = state.sourceCurrencyId,
-            amount = state.sourceAmount,
-            availableCurrencies = state.availableCurrencies,
-            onCurrencyChange = { viewModel.updateCurrencies(isSource = true, it) },
-            onAmountChange = viewModel::updateSourceAmount
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // 2. Swap Button
-        IconButton(
-            onClick = viewModel::swapCurrencies,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        ) {
-            Icon(Icons.Filled.SwapVert, contentDescription = "Swap")
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // 3. Destination Currency Output
-        CurrencyResultRow(
-            currencyId = state.destinationCurrencyId,
-            resultAmount = state.resultAmount,
-            availableCurrencies = state.availableCurrencies,
-            onCurrencyChange = { viewModel.updateCurrencies(isSource = false, it) }
-        )
-
-        // 4. Error Message
-        state.error?.let {
-            Text(
-                text = it,
-                color = Color.Red,
-                modifier = Modifier.padding(top = 8.dp)
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Currency Calculator") },
+                navigationIcon = { // <-- Back Button
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                }
             )
+        },
+        content = { paddingValues ->
+
+            Column(
+                modifier = Modifier
+                    .padding(paddingValues) // <-- Scaffold ရဲ့ Padding ကို သုံးပါ
+                    .padding(horizontal = 16.dp)
+            ) {
+
+                // 1. Source Currency Input
+                CurrencyInputRow(
+                    currencyId = state.sourceCurrencyId,
+                    amount = state.sourceAmount,
+                    availableCurrencies = state.availableCurrencies,
+                    onCurrencyChange = { viewModel.updateCurrencies(isSource = true, it) },
+                    onAmountChange = viewModel::updateSourceAmount
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // 2. Swap Button
+                IconButton(
+                    onClick = viewModel::swapCurrencies,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                ) {
+                    Icon(Icons.Filled.SwapVert, contentDescription = "Swap")
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // 3. Destination Currency Output
+                CurrencyResultRow(
+                    currencyId = state.destinationCurrencyId,
+                    resultAmount = state.resultAmount,
+                    availableCurrencies = state.availableCurrencies,
+                    onCurrencyChange = { viewModel.updateCurrencies(isSource = false, it) }
+                )
+
+                // 4. Error Message
+                state.error?.let {
+                    Text(
+                        text = it,
+                        color = Color.Red,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                }
+            }
         }
-    }
+    )
 }
 
 @Composable
