@@ -1,18 +1,20 @@
 package com.example.mmrateconverter.di
 
+import com.example.mmrateconverter.data.local.LocalDataSource
+import com.example.mmrateconverter.data.local.LocalDataSourceImpl
+import com.example.mmrateconverter.data.local.dao.GoldDao
+import com.example.mmrateconverter.data.local.dao.RateDao
+import com.example.mmrateconverter.data.remote.FirebaseFirestoreDataSource
+import com.example.mmrateconverter.data.remote.RemoteDataSource
+import com.example.mmrateconverter.data.repository.ExchangeRateRepository
+import com.example.mmrateconverter.data.repository.ExchangeRateRepositoryImpl
+import com.example.mmrateconverter.data.repository.GoldPriceRepository
+import com.example.mmrateconverter.data.repository.GoldPriceRepositoryImpl
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import com.example.mmrateconverter.data.local.LocalDataSource
-import com.example.mmrateconverter.data.local.LocalDataSourceImpl
-import com.example.mmrateconverter.data.local.dao.RateDao
-import com.example.mmrateconverter.data.local.dao.GoldDao
-import com.example.mmrateconverter.data.remote.FirebaseFirestoreDataSource
-import com.example.mmrateconverter.data.remote.RemoteDataSource
-import com.example.mmrateconverter.data.repository.ExchangeRateRepository
-import com.example.mmrateconverter.data.repository.ExchangeRateRepositoryImpl
 import javax.inject.Singleton
 
 @Module
@@ -46,5 +48,14 @@ object RepositoryModule {
         local: LocalDataSource
     ): ExchangeRateRepository {
         return ExchangeRateRepositoryImpl(remote, local)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGoldPriceRepository(
+        remote: RemoteDataSource,
+        local: LocalDataSource
+    ): GoldPriceRepository {
+        return GoldPriceRepositoryImpl(remote, local)
     }
 }

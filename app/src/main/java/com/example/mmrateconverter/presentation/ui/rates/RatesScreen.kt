@@ -1,5 +1,6 @@
 package com.example.mmrateconverter.presentation.ui.rates
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize // Import
@@ -15,6 +16,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold // Import
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,11 +24,39 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier // Import
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp // Import
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mmrateconverter.domain.entities.ExchangeRateEntity
+import com.example.mmrateconverter.domain.entities.GoldPriceEntity
 
+@Composable
+fun GoldPriceItem(
+    goldPrice: GoldPriceEntity,
+    onFavoriteClick: () -> Unit, // <-- onFavoriteClick ကို လက်ခံရန်
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier.fillMaxWidth().clickable(onClick = onFavoriteClick),
+        verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            // ရွှေအမျိုးအစား (World/Local)
+            Text(text = goldPrice.name, style = MaterialTheme.typography.bodyLarge)
 
+            // ဈေးနှုန်းနှင့် Unit
+            Text(text = "${String.format("%,.2f", goldPrice.price)} ${goldPrice.unit}",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.DarkGray)
+            IconButton(onClick = onFavoriteClick) { // <-- Button ကို ထည့်ပါ
+                Icon(
+                    imageVector = if (goldPrice.isFavorite) Icons.Filled.Star else Icons.Default.StarBorder,
+                    contentDescription = "Favorite Gold"
+                )
+            }
+        }
+    }
+}
 @Composable
 fun RatesScreen(
     viewModel: RatesViewModel = hiltViewModel(),
@@ -62,6 +92,18 @@ fun RatesScreen(
             // 3. Error Message
             state.error?.let { Text(text = it, color = Color.Red, modifier = Modifier.padding(horizontal = 16.dp)) }
 
+            Text(
+                text = "Gold Prices",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .padding (horizontal = 16.dp))
+            state.goldPrices.forEach { goldPrice ->
+                GoldPriceItem(
+                    goldPrice = goldPrice,
+                    onFavoriteClick = { viewModel.onGoldFavoriteToggle(goldPrice) }
+                )
+            }
             // 4. Rates List
             LazyColumn { // <-- ဒီနေရာက ရှင်းသွားပါလိမ့်မယ်
                 items(state.rates) { rate ->
@@ -102,4 +144,19 @@ fun RateItem(
             )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewRateItem() {
+    // Test Data နဲ့ ခေါ်ပါ။ ExchangeRateEntity အတွက် Sample data လိုအပ်ပါမယ်။
+    val sampleRate = ExchangeRateEntity(
+        id = "USD",
+        name = "US Dollar",
+        rateToMMK = 3500.0,
+        lastUpdated = 1731720000000L,
+        isFavorite = false
+    )
+
+    RateItem(rate = sampleRate, onFavoriteClick = {})
 }
