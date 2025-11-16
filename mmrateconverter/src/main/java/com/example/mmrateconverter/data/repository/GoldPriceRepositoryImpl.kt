@@ -1,12 +1,13 @@
 package com.example.mmrateconverter.data.repository
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import android.util.Log
 import com.example.mmrateconverter.data.local.LocalDataSource
 import com.example.mmrateconverter.data.mapper.toDomainEntity
 import com.example.mmrateconverter.data.mapper.toRoomEntity
 import com.example.mmrateconverter.data.remote.RemoteDataSource
 import com.example.mmrateconverter.domain.entities.GoldPriceEntity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import java.io.IOException
 
 class GoldPriceRepositoryImpl(
@@ -17,14 +18,15 @@ class GoldPriceRepositoryImpl(
     override fun getGoldPrices(): Flow<List<GoldPriceEntity>> = flow {
 
         // 1. Local Cache → Instant UI
-        localDataSource.getGoldPricesFlow().collect { localPrices ->
-            if (localPrices.isNotEmpty()) {
-                emit(localPrices.map { it.toDomainEntity() })
+        val cachedPrices = localDataSource.getGoldPricesList()
+        if (cachedPrices.isNotEmpty()) {
+            emit(cachedPrices.map { it.toDomainEntity() })
             }
-        }
+
 
         // 2. Remote Fetch → Firebase
         try {
+            Log.d("REPO_SYNC", "Fetching Gold Prices...")
             val remotePrices = remoteDataSource.fetchGoldPrices()
 
             // 3. Merge Favorite Status
@@ -37,11 +39,12 @@ class GoldPriceRepositoryImpl(
 
             // 4. Save to Local DB
             localDataSource.saveGoldPrices(pricesToSave)
+            emit(localDataSource.getGoldPricesList().map { it.toDomainEntity() })
 
         } catch (e: IOException) {
             // Network error fallback
         } catch (e: Exception) {
-            // Other errors
+            Log.e("REPO_SYNC", "Gold Fetch Failed: ${e.message}")
         }
     }
 

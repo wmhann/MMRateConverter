@@ -1,6 +1,5 @@
 package com.example.mmrateconverter.presentation.ui.calculator
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,22 +9,27 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.SwapVert
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.ui.unit.sp 
-import androidx.compose.material3.LocalTextStyle
 
 @Composable
 fun CalculatorScreen(viewModel: CalculatorViewModel = hiltViewModel()) {
@@ -122,6 +126,7 @@ fun CurrencyResultRow(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CurrencyDropdown(
     selectedId: String,
@@ -129,9 +134,42 @@ fun CurrencyDropdown(
     onSelect: (String) -> Unit,
     modifier: Modifier
 ) {
-    // Placeholder UI — replace with ExposedDropdownMenuBox later
-    Text(
-        text = selectedId,
-        modifier = modifier.clickable { /* Show dropdown */ }
-    )
+    // Dropdown ရဲ့ အဖွင့်/အပိတ် State
+    var expanded by remember { mutableStateOf(false) }
+
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded },
+        modifier = modifier
+    ) {
+        // TextField ကို Dropdown ရဲ့ Base အဖြစ် သုံးခြင်း
+        TextField(
+            // selectedId ကို ပြသခြင်း
+            value = selectedId,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text("Currency") },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            colors = ExposedDropdownMenuDefaults.textFieldColors(),
+            modifier = Modifier.menuAnchor() // Dropdown Menu ကို တွဲချိတ်ခြင်း
+        )
+
+        // Dropdown Menu
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            // currencyIds ထဲက Item တွေကို ပြသခြင်း
+            currencyIds.forEach { selectionOption ->
+                DropdownMenuItem(
+                    text = { Text(selectionOption) },
+                    onClick = {
+                        onSelect(selectionOption) // ViewModel ကို Update လုပ်
+                        expanded = false // Menu ပိတ်
+                    },
+                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                )
+            }
+        }
+    }
 }

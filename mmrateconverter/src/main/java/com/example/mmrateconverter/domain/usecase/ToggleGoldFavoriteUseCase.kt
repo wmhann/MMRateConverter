@@ -1,10 +1,11 @@
 package com.example.mmrateconverter.domain.usecase
 
 import com.example.mmrateconverter.data.repository.GoldPriceRepository
+import javax.inject.Inject
 
 
 // Favorite Status ကို ပြောင်းလဲပေးမယ့် Use Case
-class ToggleGoldFavoriteUseCase(
+class ToggleGoldFavoriteUseCase @Inject constructor(
     private val repository: GoldPriceRepository
 ) {
     // Suspend function ဖြစ်ပြီး View ကနေ ခေါ်လိုက်တဲ့အခါ DB Update လုပ်ပေးသည်
