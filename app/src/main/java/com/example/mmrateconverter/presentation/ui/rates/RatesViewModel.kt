@@ -93,7 +93,17 @@ class RatesViewModel @Inject constructor(
 
     private fun formatLastUpdated(rate: ExchangeRateEntity?): String {
         // Long (Timestamp) ကို Date String အဖြစ် ပြောင်းလဲပေးမယ့် Logic
-        // ... (ကိုယ်တိုင် Date/Time Formatting Logic ကို ရေးပါ)
-        return "Last Update: ${rate?.lastUpdated ?: "N/A"}"
+        val timestamp = rate?.lastUpdated ?: return "Last Update: N/A"
+
+        val date = java.util.Date(timestamp)
+        // 2. SimpleDateFormat (User ရဲ့ Default TimeZone နဲ့ Locale ကို သုံးသည်)
+        val formatter = java.text.SimpleDateFormat(
+            "dd MMM, yyyy - hh:mm a", // <-- "z" ကို ထပ်ထည့်ခြင်းဖြင့် TimeZone ကိုပါ ဖော်ပြနိုင်သည်
+            java.util.Locale.getDefault()
+        )
+
+        // **TimeZone ကို သတ်မှတ်ခြင်းမရှိတဲ့အတွက် System Default TimeZone ကို သုံးမှာဖြစ်ပါတယ်**
+
+        return "Last Update: ${formatter.format(date)}"
     }
 }
