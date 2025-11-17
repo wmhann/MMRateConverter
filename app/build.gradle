@@ -45,7 +45,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.ext.coroutinesVersion")
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation("androidx.navigation:navigation-compose:2.9.5")
-
+    implementation("androidx.datastore:datastore-preferences:1.1.7")
     // Hilt Core
     implementation("com.google.dagger:hilt-android:2.57.1")
     implementation libs.foundation.layout

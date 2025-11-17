@@ -2,6 +2,7 @@ package com.example.mmrateconverter.di
 
 import com.example.mmrateconverter.data.local.LocalDataSource
 import com.example.mmrateconverter.data.local.LocalDataSourceImpl
+import com.example.mmrateconverter.data.local.TimestampDataSource
 import com.example.mmrateconverter.data.local.dao.GoldDao
 import com.example.mmrateconverter.data.local.dao.RateDao
 import com.example.mmrateconverter.data.remote.FirebaseFirestoreDataSource
@@ -45,17 +46,19 @@ object RepositoryModule {
     @Singleton
     fun provideExchangeRateRepository(
         remote: RemoteDataSource,
-        local: LocalDataSource
+        local: LocalDataSource,
+        timestampDataSource: TimestampDataSource
     ): ExchangeRateRepository {
-        return ExchangeRateRepositoryImpl(remote, local)
+        return ExchangeRateRepositoryImpl(remote, local, timestampDataSource)
     }
 
     @Provides
     @Singleton
     fun provideGoldPriceRepository(
         remote: RemoteDataSource,
-        local: LocalDataSource
+        local: LocalDataSource,
+        timestampDataSource: TimestampDataSource
     ): GoldPriceRepository {
-        return GoldPriceRepositoryImpl(remote, local)
+        return GoldPriceRepositoryImpl(remote, local, timestampDataSource)
     }
 }
