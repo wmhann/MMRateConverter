@@ -1,1 +1,4 @@
 /build
+# Google Services Keys
+google-services.json
+app/google-services.json

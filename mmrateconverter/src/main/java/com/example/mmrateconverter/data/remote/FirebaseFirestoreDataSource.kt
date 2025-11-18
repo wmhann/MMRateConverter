@@ -40,11 +40,14 @@ class FirebaseFirestoreDataSource(
             // Firestore Document များကို Loop ပတ်ပြီး Model အဖြစ် ပြောင်းလဲခြင်း
             for (document in snapshot.documents) {
                 // Firestore ကနေ Data ကို Map အနေနဲ့ ဆွဲယူပြီး RateRemoteModel အဖြစ် ပြောင်းလဲခြင်း
+                val rawRate = document.get("rateToMMK")
+                Log.d(TAG, "Raw rateToMMK for ${document.id}: type=${rawRate?.javaClass?.name}, value=$rawRate")
+
                 // Field Name တွေ မှန်ဖို့ လိုအပ်ပါတယ်။
                 val model = ExchangeRateRemoteModel(
                     id = document.id, // Document ID ကို Currency Code အဖြစ် ယူခြင်း (ဥပမာ: "USD")
                     name = document.getString("name") ?: "",
-                    rateToMMK = document.getDouble("rateToMMK") ?: 0.0,
+                    rateToMMK = (document.get("rateToMMK") as? Number)?.toDouble() ?: 0.0,
                     lastUpdated = document.getTimestamp("lastUpdated")?.toDate()?.time
                         ?: System.currentTimeMillis()
                 )
