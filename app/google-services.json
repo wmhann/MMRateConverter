@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1007159660795",
+    "project_id": "mmrateconverter",
+    "storage_bucket": "mmrateconverter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007159660795:android:2450472dbf441377cd205e",
+        "android_client_info": {
+          "package_name": "com.example.mmrateconverter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4emHDiQar6YPxSLTgdTeuZWJO8D1xiSc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
